@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Gestión de Productos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+    
+    </style>
+</head>
+<body>
+    <div class="header-logos">
+        <img src="{{ url_for('static', filename='logo1.png') }}" alt="Logo 1">
+        <div style="letter-spacing:0cqmin;">
+            <h1>Universidad Pública de El Alto</h1>
+            <p><b>Ingeniería de Sistemas</b> </p>
+            <p><b>Tectnologias Emergentes</b> </p>
+        </div>
+        <img src="{{ url_for('static', filename='logo2.png') }}" alt="Logo 2">
+    </div>
+    
+   
+    
+    <div class="header">
+        <p>SEGUNDO PARCIAL TEM-742</p>
+        <p>Nombre: Ivan Angel Choque Larico</p>
+        <p>Carnet: 9910933</p>
+    </div>
+
+    <h2>Gestión de productos</h2>
+    <a href="{{ url_for('agregar_producto') }}">Nuevo producto</a>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Fecha de Vencimiento</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.id }}</td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.cantidad }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td>{{ producto.categoria }}</td>
+                    <td>{{ producto.fecha_vencimiento }}</td>
+                    <td>
+                        <a href="{{ url_for('editar_producto', id=producto.id) }}">Editar</a>
+                        <a href="{{ url_for('eliminar_producto', id=producto.id) }}" onclick="return confirm('¿Está seguro de eliminar este producto?')">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
